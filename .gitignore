@@ -1,0 +1,20 @@
+# Estado de trabalho do /goal (rascunho local, não é documentação)
+.goal/
+
+# .NET
+bin/
+obj/
+TestResults/
+*.user
+*.suo
+.vs/
+
+# IDEs
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# SO
+Thumbs.db
+.DS_Store
+

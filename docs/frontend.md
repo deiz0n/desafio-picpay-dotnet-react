@@ -99,7 +99,7 @@ Detalhes de simulação ([ADR 0012](adr/0012-mock-da-api-com-json-server-e-wrapp
 - Aplica **todas** as regras acima de verdade: debita o pagador, credita o recebedor, registra as duas movimentações e cria a notificação do recebedor, tudo ou nada.
 - `X-Mock-Authorizer: deny` força `403 transfer_denied`; `X-Mock-Authorizer: down` força `503 authorizer_unavailable`. Sem o header, autoriza.
 - Token: `mock-token-<id>`, aceito apenas se o usuário existir.
-- Estado vive em `frontend/mock/db.json` (reiniciar restaura o seed por `npm run mock:reset`).
+- Estado vive em `frontend/mock/db.json`. Reiniciar o servidor **mantém** o estado; `npm run mock:reset` restaura o seed.
 
 ### Seed do mock
 
@@ -187,7 +187,7 @@ F9 depende de o `docker compose` existir (item do roadmap do backend).
 
 O front-first deixa uma lista de trabalho para o backend, registrada no [roadmap](roadmap.md). Cada item abaixo sai deste contrato:
 
-- cadastro (`POST /users`) com unicidade de e-mail e documento e **saldo inicial** (R$ 1.000,00 como `welcome_credit`);
+- cadastro (`POST /users`) com unicidade de e-mail e documento e **saldo inicial** (R$ 1.000,00 como `welcome_credit`); criar a conta, a carteira e o crédito deve ser **uma única transação**: se qualquer passo falhar, nada é criado;
 - autenticação (`POST /auth/login`, token) — decisão de JWT em ADR próprio;
 - endpoints de leitura: `/users/me`, `PATCH /users/me`, `/users?search=`, `/wallets/me`, `/transactions/me`, `/transactions/me/summary`;
 - notificações persistidas: `GET /notifications`, `PATCH /notifications/{id}`, `POST /notifications/read-all`;
@@ -205,6 +205,7 @@ O front-first deixa uma lista de trabalho para o backend, registrada no [roadmap
 | Tema escuro sem contraste | Paleta escura definida e medida na F1, antes de qualquer tela |
 | Handlers do MSW divergem do wrapper do mock | Ambos seguem este contrato; ao mudar o contrato, atualizar os dois |
 | Token em `localStorage` (XSS) | Aceito só para o mock; a autenticação real decide cookie `HttpOnly` ou outro meio |
+| Enumeração de contas: `GET /users?search=` revela a qualquer logado se um e-mail ou documento tem conta | Busca só por valor **exato**, resposta mínima (`id`, `name`, `type`) e, no backend real, **limite de taxa** nessa rota |
 | Notificação com atraso de até ~30 s | Aceito ([ADR 0014](adr/0014-notificacoes-persistidas-com-polling.md)); tempo real fica como melhoria futura |
 
 ## Fora do escopo

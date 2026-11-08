@@ -53,6 +53,8 @@ Ao concluir um `/goal` que entrega um item, atualize a linha (status + SPEC + AD
 
 Plano e contrato em [frontend.md](frontend.md). Cada fatia é um `/goal`; a ordem é F1 → F5, depois F6/F7/F8 em qualquer ordem, por fim F9.
 
+Exceção de convenção: na linha de planejamento, a coluna **Spec** aponta para o `frontend.md` (um plano), porque esse goal não construiu nada e não tem SPEC. As fatias F1–F9 usam a coluna normalmente, com a SPEC de cada `/goal`.
+
 | Item | Status | Spec | ADRs |
 | --- | --- | --- | --- |
 | Planejamento do front (decisões, contrato do mock, fatias) | ✅ | [frontend.md](frontend.md) | [0008](adr/0008-spa-react-vite-typescript-com-react-router.md), [0009](adr/0009-ui-com-tailwind-shadcn-e-identidade-dudupay.md), [0010](adr/0010-formularios-com-react-hook-form-e-zod.md), [0011](adr/0011-estado-de-servidor-com-tanstack-query.md), [0012](adr/0012-mock-da-api-com-json-server-e-wrapper.md), [0013](adr/0013-testes-do-front-com-vitest-testing-library-e-msw.md), [0014](adr/0014-notificacoes-persistidas-com-polling.md) |

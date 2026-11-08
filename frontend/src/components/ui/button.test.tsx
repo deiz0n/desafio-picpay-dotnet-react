@@ -7,7 +7,9 @@ describe('Button', () => {
   it('é encontrado pelo papel e pelo nome', () => {
     render(<Button>Transferir</Button>)
 
-    expect(screen.getByRole('button', { name: 'Transferir' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Transferir' }),
+    ).toBeInTheDocument()
   })
 
   it('dispara o clique e não dispara quando desabilitado', async () => {

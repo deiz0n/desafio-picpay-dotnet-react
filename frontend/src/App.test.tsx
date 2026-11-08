@@ -10,4 +10,18 @@ describe('App', () => {
       screen.getByRole('heading', { name: 'DuduPay', level: 1 }),
     ).toBeInTheDocument()
   })
+
+  it('oferece o botão de alternar tema', () => {
+    render(<App />)
+
+    expect(
+      screen.getByRole('button', { name: /Ativar tema (claro|escuro)/ }),
+    ).toBeInTheDocument()
+  })
+
+  it('mostra o conteúdo da vitrine', () => {
+    render(<App />)
+
+    expect(screen.getByLabelText('E-mail')).toBeInTheDocument()
+  })
 })

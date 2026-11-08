@@ -31,7 +31,9 @@ describe('ThemeProvider', () => {
     mockMatchMedia(true)
     renderizar()
 
-    expect(screen.getByRole('button', { name: 'tema: dark' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'tema: dark' }),
+    ).toBeInTheDocument()
     expect(html()).toHaveClass('dark')
   })
 
@@ -39,7 +41,9 @@ describe('ThemeProvider', () => {
     mockMatchMedia(false)
     renderizar()
 
-    expect(screen.getByRole('button', { name: 'tema: light' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'tema: light' }),
+    ).toBeInTheDocument()
     expect(html()).not.toHaveClass('dark')
   })
 
@@ -64,7 +68,9 @@ describe('ThemeProvider', () => {
     localStorage.setItem(CHAVE, 'light')
     renderizar()
 
-    expect(screen.getByRole('button', { name: 'tema: light' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'tema: light' }),
+    ).toBeInTheDocument()
     expect(html()).not.toHaveClass('dark')
   })
 
@@ -73,7 +79,9 @@ describe('ThemeProvider', () => {
     localStorage.setItem(CHAVE, 'roxo')
     renderizar()
 
-    expect(screen.getByRole('button', { name: 'tema: dark' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'tema: dark' }),
+    ).toBeInTheDocument()
     expect(html()).toHaveClass('dark')
   })
 
@@ -84,7 +92,9 @@ describe('ThemeProvider', () => {
 
     act(() => sistema.mudarSistemaPara(true))
 
-    expect(screen.getByRole('button', { name: 'tema: dark' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'tema: dark' }),
+    ).toBeInTheDocument()
     expect(html()).toHaveClass('dark')
   })
 
@@ -101,7 +111,9 @@ describe('ThemeProvider', () => {
 
     await usuario.click(screen.getByRole('button', { name: 'tema: light' }))
 
-    expect(screen.getByRole('button', { name: 'tema: dark' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'tema: dark' }),
+    ).toBeInTheDocument()
     expect(html()).toHaveClass('dark')
   })
 

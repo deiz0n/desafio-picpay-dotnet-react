@@ -7,7 +7,9 @@ export function parseHex(hex: string): Rgb {
   if (!/^#[0-9a-f]{6}$/i.test(hex)) {
     throw new Error(`Cor inválida (esperado #RRGGBB): ${hex}`)
   }
-  return [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)) as unknown as Rgb
+  return [1, 3, 5].map((i) =>
+    parseInt(hex.slice(i, i + 2), 16),
+  ) as unknown as Rgb
 }
 
 function luminanciaRelativa([r, g, b]: Rgb): number {

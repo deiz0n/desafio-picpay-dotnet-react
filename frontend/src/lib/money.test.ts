@@ -3,7 +3,7 @@ import { formatBRL, reaisToCents } from '@/lib/money'
 
 // O Intl separa "R$" do número com um espaço sem quebra (U+00A0). Trocamos por
 // um espaço comum só para os testes ficarem legíveis.
-const normalizar = (texto: string) => texto.replace(/ /g, ' ')
+const normalizar = (texto: string) => texto.replace(/\u00a0/g, ' ')
 
 describe('formatBRL', () => {
   it('formata centavos como moeda brasileira', () => {

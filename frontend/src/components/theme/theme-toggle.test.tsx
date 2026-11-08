@@ -19,10 +19,14 @@ describe('ThemeToggle', () => {
     const usuario = userEvent.setup()
     renderizar()
 
-    await usuario.click(screen.getByRole('button', { name: 'Ativar tema escuro' }))
+    await usuario.click(
+      screen.getByRole('button', { name: 'Ativar tema escuro' }),
+    )
     expect(document.documentElement).toHaveClass('dark')
 
-    await usuario.click(screen.getByRole('button', { name: 'Ativar tema claro' }))
+    await usuario.click(
+      screen.getByRole('button', { name: 'Ativar tema claro' }),
+    )
     expect(document.documentElement).not.toHaveClass('dark')
   })
 

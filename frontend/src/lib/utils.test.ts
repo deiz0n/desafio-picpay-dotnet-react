@@ -7,6 +7,10 @@ describe('cn', () => {
   })
 
   it('ignora valores falsos e junta o restante', () => {
-    expect(cn('flex', false && 'hidden', undefined, 'gap-2')).toBe('flex gap-2')
+    const escondido = false as boolean
+
+    expect(cn('flex', escondido && 'hidden', undefined, 'gap-2')).toBe(
+      'flex gap-2',
+    )
   })
 })

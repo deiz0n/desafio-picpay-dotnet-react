@@ -2,7 +2,7 @@
 
 - **Status:** done
 - **Data:** 2026-11-08
-- **Branch / PR:** `feat/01-fundacao-frontend` · PR a preencher
+- **Branch / PR:** `feat/01-fundacao-frontend` · [#4](https://github.com/deiz0n/desafio-picpay-dotnet-react/pull/4)
 - **Item do roadmap:** F1 — Fundação (seção Front-end)
 - **ADRs:** [0008 — SPA React + Vite + TypeScript](../adr/0008-spa-react-vite-typescript-com-react-router.md) · [0009 — Tailwind, shadcn/ui e identidade DuduPay](../adr/0009-ui-com-tailwind-shadcn-e-identidade-dudupay.md) · [0013 — Testes do front](../adr/0013-testes-do-front-com-vitest-testing-library-e-msw.md)
 
@@ -135,4 +135,4 @@ Além dos testes: `npm run lint`, `format:check`, `typecheck` e `build` verdes a
 
 ## Histórico
 
-- 2026-11-08: entregue via `/goal` (PR a preencher). **Desvios do plano aprovado:** (1) TypeScript fixado em 6.0.3 e o `oxlint` do gerador do Vite removido em favor do ESLint; (2) o preset `nova` do shadcn trouxe Geist e cores `oklch`, ambos substituídos (Inter e tokens em hex); (3) token `--brand` criado, porque um só `--primary` não serve como fundo de botão e como texto no tema escuro; (4) variantes `destructive` de `Button` e `Badge` trocadas de fundo translúcido (contraste 3,98) para vermelho sólido (4,83 claro, 6,95 escuro); (5) script anti-flash no `index.html`, com testes, que não estava no plano; (6) `shadcn` movido para `devDependencies` depois do code review. Tentado e descartado: `npm audit fix --force`.
+- 2026-11-08: entregue via `/goal` ([#4](https://github.com/deiz0n/desafio-picpay-dotnet-react/pull/4)). **Desvios do plano aprovado:** (1) TypeScript fixado em 6.0.3 e o `oxlint` do gerador do Vite removido em favor do ESLint; (2) o preset `nova` do shadcn trouxe Geist e cores `oklch`, ambos substituídos (Inter e tokens em hex); (3) token `--brand` criado, porque um só `--primary` não serve como fundo de botão e como texto no tema escuro; (4) variantes `destructive` de `Button` e `Badge` trocadas de fundo translúcido (contraste 3,98) para vermelho sólido (4,83 claro, 6,95 escuro); (5) script anti-flash no `index.html`, com testes, que não estava no plano; (6) `shadcn` movido para `devDependencies` depois do code review. Tentado e descartado: `npm audit fix --force`.

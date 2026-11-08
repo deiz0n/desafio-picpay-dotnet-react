@@ -6,6 +6,7 @@ Fonte de verdade do projeto. Leia antes de decidir estrutura, convenções ou ar
 | --- | --- |
 | [challenge.md](challenge.md) | Enunciado do desafio, regras de negócio, mocks e notas técnicas |
 | [roadmap.md](roadmap.md) | Competências a praticar, com status e a SPEC que entregou cada uma |
+| [frontend.md](frontend.md) | Plano do front-end DuduPay: telas, contrato da API (mock), design e fatias |
 | [specs/](specs/README.md) | SPECs finais — registro do que foi construído por cada `/goal` |
 | [adr/](adr/README.md) | Architecture Decision Records — decisões arquiteturais e seus porquês |
 

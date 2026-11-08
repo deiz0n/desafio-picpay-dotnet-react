@@ -15,8 +15,11 @@ Regras completas: [`.agents/rules/didatico.md`](.agents/rules/didatico.md).
 
 C# / .NET 10, ASP.NET Core com Controllers, Clean Architecture no padrão do CVL (`Pagamentos.Api` → `Application` → `Domain` ← `Repository` / `Infrastructure`), Handlers sem MediatR, Result pattern, PostgreSQL + Dapper, migrations SQL, Unit of Work. Testes: xUnit + `WebApplicationFactory` + Testcontainers. Detalhes e porquês: ADRs 0002–0007.
 
+Front-end **DuduPay** (`frontend/`, ainda não criado): SPA React + Vite + TypeScript, `react-router-dom`, Tailwind v4 + shadcn/ui, React Hook Form + Zod, TanStack Query, Vitest + Testing Library + MSW (sem E2E), construído antes do backend sobre um mock json-server. Plano, contrato da API e fatias: **`docs/frontend.md`**; porquês: ADRs 0008–0014.
+
 - Enunciado e regras de negócio: **`docs/challenge.md`** (skill `picpay-challenge` resume).
-- O que falta entregar: **`docs/roadmap.md`** — confira antes de tratar um pedido como feature nova.
+- O que falta entregar: **`docs/roadmap.md`** — confira antes de tratar um pedido como feature nova (inclui as fatias F1–F9 do front).
+- Contrato da API e plano do front: **`docs/frontend.md`**.
 - Decisões em vigor: **`docs/adr/README.md`** — respeite os ADRs `accepted`.
 - O que já foi construído: **`docs/specs/`** — SPECs finais de cada `/goal`.
 
@@ -51,7 +54,7 @@ Skill: [`.agents/skills/goal/SKILL.md`](.agents/skills/goal/SKILL.md). Também p
 
 ## Comandos
 
-> A solução ainda não existe. O primeiro `/goal` que criá-la deve confirmar/ajustar estes caminhos.
+> A solução ainda não existe. O primeiro `/goal` que criá-la deve confirmar/ajustar estes caminhos. Os comandos do front (`npm run dev`, `npm test`, `npm run build`, `npm run mock`) serão definidos e documentados aqui pela fatia F1 do front.
 
 | Ação | Comando |
 | --- | --- |

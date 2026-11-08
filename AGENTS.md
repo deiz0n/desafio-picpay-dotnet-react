@@ -54,7 +54,9 @@ Skill: [`.agents/skills/goal/SKILL.md`](.agents/skills/goal/SKILL.md). Também p
 
 ## Comandos
 
-> A solução ainda não existe. O primeiro `/goal` que criá-la deve confirmar/ajustar estes caminhos. Os comandos do front (`npm run dev`, `npm test`, `npm run build`, `npm run mock`) serão definidos e documentados aqui pela fatia F1 do front.
+### Backend
+
+> A solução .NET ainda não existe. O primeiro `/goal` que criá-la deve confirmar/ajustar estes caminhos.
 
 | Ação | Comando |
 | --- | --- |
@@ -63,4 +65,21 @@ Skill: [`.agents/skills/goal/SKILL.md`](.agents/skills/goal/SKILL.md). Também p
 | Testes filtrados | `dotnet test backend/Pagamentos.sln --filter "FullyQualifiedName~NomeDaClasse"` |
 | Formatação | `dotnet format backend/Pagamentos.sln --verify-no-changes` |
 | PR | `gh pr create --base develop --title "…" --body-file <arquivo>` |
+
+### Front-end (`frontend/`, rode dentro da pasta)
+
+> Node ≥ 22.12 ou ≥ 24 (`frontend/.nvmrc` = 24). Instalação: `npm install` (as versões são exatas, `save-exact`). O mock da API (`npm run mock`) chega na fatia F2.
+
+| Ação | Comando |
+| --- | --- |
+| Rodar em desenvolvimento | `npm run dev` |
+| Testes (todos) | `npm test` (Vitest) |
+| Testes filtrados | `npm test -- <trecho do arquivo ou do nome>` |
+| Testes em modo observação | `npm run test:watch` |
+| Tipos | `npm run typecheck` |
+| Lint | `npm run lint` |
+| Formatação (verificar / aplicar) | `npm run format:check` / `npm run format` |
+| Build | `npm run build` |
+
+Antes de concluir uma fatia do front: `npm run lint`, `npm run format:check`, `npm run typecheck`, `npm test` e `npm run build` verdes.
 

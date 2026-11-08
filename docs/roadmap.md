@@ -58,7 +58,7 @@ Exceção de convenção: na linha de planejamento, a coluna **Spec** aponta par
 | Item | Status | Spec | ADRs |
 | --- | --- | --- | --- |
 | Planejamento do front (decisões, contrato do mock, fatias) | ✅ | [frontend.md](frontend.md) | [0008](adr/0008-spa-react-vite-typescript-com-react-router.md), [0009](adr/0009-ui-com-tailwind-shadcn-e-identidade-dudupay.md), [0010](adr/0010-formularios-com-react-hook-form-e-zod.md), [0011](adr/0011-estado-de-servidor-com-tanstack-query.md), [0012](adr/0012-mock-da-api-com-json-server-e-wrapper.md), [0013](adr/0013-testes-do-front-com-vitest-testing-library-e-msw.md), [0014](adr/0014-notificacoes-persistidas-com-polling.md) |
-| F1 — Fundação (Vite + React + TS, Tailwind v4, shadcn/ui, tokens claro/escuro, Vitest) | ⏳ | — | [0008](adr/0008-spa-react-vite-typescript-com-react-router.md), [0009](adr/0009-ui-com-tailwind-shadcn-e-identidade-dudupay.md), [0013](adr/0013-testes-do-front-com-vitest-testing-library-e-msw.md) |
+| F1 — Fundação (Vite + React + TS, Tailwind v4, shadcn/ui, tokens claro/escuro, Vitest) | ✅ | [01](specs/01-fundacao-frontend.md) | [0008](adr/0008-spa-react-vite-typescript-com-react-router.md), [0009](adr/0009-ui-com-tailwind-shadcn-e-identidade-dudupay.md), [0013](adr/0013-testes-do-front-com-vitest-testing-library-e-msw.md) |
 | F2 — Mock da API (json-server + wrapper com as regras e o seed) | ⏳ | — | [0012](adr/0012-mock-da-api-com-json-server-e-wrapper.md) |
 | F3 — Dados e sessão (cliente HTTP, TanStack Query, rotas protegidas) | ⏳ | — | [0011](adr/0011-estado-de-servidor-com-tanstack-query.md) |
 | F4 — Login e cadastro | ⏳ | — | [0010](adr/0010-formularios-com-react-hook-form-e-zod.md) |

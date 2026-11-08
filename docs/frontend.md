@@ -121,10 +121,13 @@ Identidade, paleta e regras de cor: [ADR 0009](adr/0009-ui-com-tailwind-shadcn-e
 
 | Token / uso | Tema claro | Tema escuro |
 | --- | --- | --- |
-| `--primary` (violeta) | `#6D28D9` (texto branco: 7,10 ✅) | variante mais clara, **definida e medida na F1** |
-| Recebido / sucesso (teal) | `#0F766E` (texto branco: 5,47 ✅) | variante mais clara, **definida e medida na F1** |
-| `--destructive` | `#DC2626` (texto branco: 4,83 ✅) | idem |
+| `--primary` (fundo de botão, violeta) | `#6D28D9` (texto branco: 7,10 ✅) | `#7C3AED` (texto branco: 5,70 ✅) |
+| `--brand` (violeta para texto e ícones) | `#6D28D9` (sobre o fundo: 6,81 ✅) | `#A78BFA` (sobre o fundo: 7,06 ✅) |
+| Recebido / sucesso (teal) | `#0F766E` (texto branco: 5,47 ✅) | `#2DD4BF` (texto escuro: 10,32 ✅) |
+| `--destructive` | `#DC2626` (texto branco: 4,83 ✅) | `#F87171` (texto escuro: 6,95 ✅) |
 | Enviado | cor neutra (`--foreground`), sinal `−` | idem |
+
+Valores finais e testados desde a F1: ver [SPEC 01](specs/01-fundacao-frontend.md). O teste `tokens.test.ts` falha se algum par deixar de passar em AA.
 
 Regras: recebido com `+` e ícone; enviado neutro com `−` (não vermelho); vermelho só para erro e ação destrutiva; cor nunca é a única pista; valores com `Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })` e algarismos tabulares; tom arejado (saldo grande, poucos elementos por tela).
 
@@ -171,11 +174,11 @@ Cada fatia é um `/goal` futuro, com branch `feat/NN-slug` e SPEC própria. Orde
 
 | # | Fatia | Pronto quando | Prova (Vitest) |
 | --- | --- | --- | --- |
-| F1 | **Fundação:** Vite + React + TS estrito, Tailwind v4, shadcn/ui, tokens DuduPay claro/escuro (com contraste medido), ESLint, Vitest | `npm run build` e `npm test` verdes; app mostra página inicial com tema claro e escuro | Renderiza o app; utilitário de formatação BRL |
+| F1 ✅ | **Fundação:** Vite + React + TS estrito, Tailwind v4, shadcn/ui, tokens DuduPay claro/escuro (com contraste medido), `ThemeProvider` e botão de tema, formatação BRL, ESLint, Prettier, Vitest ([SPEC 01](specs/01-fundacao-frontend.md)) | `npm run build` e `npm test` verdes; app mostra página inicial com tema claro e escuro | Renderiza o app; contraste dos tokens; tema; formatação BRL |
 | F2 | **Mock da API:** json-server + wrapper, seed, regras, `X-Mock-Authorizer`, `mock:reset` | Todos os endpoints do contrato respondem como documentado | Transferência válida debita/credita e gera notificação; cada erro com status e `code` certos; falha mantém saldos |
 | F3 | **Dados e sessão:** cliente HTTP, tipo de erro Problem Details, TanStack Query, sessão (token em `localStorage`), rotas protegidas | Rota protegida redireciona sem sessão; 401 derruba a sessão | Redirecionamento; conversão de erro; 401 limpa a sessão |
 | F4 | **Login e cadastro:** React Hook Form + Zod, validação de CPF/CNPJ | Cadastra, loga e cai no dashboard | Validação de documentos; 401, 409 e 422 exibidos nos campos certos |
-| F5 | **Layout e dashboard:** cabeçalho, navegação, alternância de tema, saldo, totais do mês, últimas movimentações | Dashboard mostra os dados do seed corretamente | Valores em BRL; recebido com `+`/teal, enviado com `−`/neutro; estados vazio/erro |
+| F5 | **Layout e dashboard:** cabeçalho e navegação (o botão de tema já existe desde a F1: aqui só ganha seu lugar), saldo, totais do mês, últimas movimentações; remove a vitrine | Dashboard mostra os dados do seed corretamente | Valores em BRL; recebido com `+`/teal, enviado com `−`/neutro; estados vazio/erro |
 | F6 | **Transferência:** busca de destinatário, valor, confirmação, erros | Transfere e o saldo do dashboard atualiza | Cada erro (`422`, `404`, `403`, `503`) mostra a mensagem certa; lojista não acessa; sucesso invalida o saldo |
 | F7 | **Perfil:** edição de nome, e-mail, senha | Alterações persistem no mock | PATCH com sucesso; 409 e `invalid_current_password` exibidos |
 | F8 | **Drawer de notificações:** polling, lida/não lida, contador, marcar todas | Transferência recebida aparece no drawer em até ~30 s | Contador; marcar como lida e todas; atualização por polling (timers falsos) |

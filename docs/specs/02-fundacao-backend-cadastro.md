@@ -2,7 +2,7 @@
 
 - **Status:** done
 - **Data:** 2026-11-20
-- **Branch / PR:** `feat/02-fundacao-backend-cadastro` · PR (a preencher)
+- **Branch / PR:** `feat/02-fundacao-backend-cadastro` · [#5](https://github.com/deiz0n/desafio-picpay-dotnet-react/pull/5)
 - **Item do roadmap:** Cadastro de usuários com saldo inicial (parcial: sem a movimentação `welcome_credit`); Modelo de dados (usuários e carteiras); Testes de unidade; Testes de integração
 - **ADRs:** [0016 — Sem Administrador](../adr/0016-sem-tipo-de-usuario-administrador.md) · [0017 — Dinheiro em `decimal`/`NUMERIC`](../adr/0017-dinheiro-em-decimal-e-numeric.md) · [0018 — Hash com `PasswordHasher<T>`](../adr/0018-hash-de-senha-com-passwordhasher.md) · [0019 — `Result` e `IUnidadeDeTrabalho` no Domain](../adr/0019-result-e-unidade-de-trabalho-no-domain.md)
 
@@ -118,4 +118,4 @@ Configuração comum em `backend/Directory.Build.props` (`net10.0`, nullable, `T
 
 ## Histórico
 
-- 2026-11-20: entregue via /goal (PR a preencher). Tentado e descartado: o teste de `CHECK` com `'administrador'` (estoura o `VARCHAR(10)` antes do `CHECK`; trocado por `'admin'`); `[Produces("application/json")]` no controller (sobrescrevia o `application/problem+json` dos erros). Bug encontrado pela integração e corrigido: com `type` desconhecido, o documento não era validado.
+- 2026-11-20: entregue via /goal ([#5](https://github.com/deiz0n/desafio-picpay-dotnet-react/pull/5)). Tentado e descartado: o teste de `CHECK` com `'administrador'` (estoura o `VARCHAR(10)` antes do `CHECK`; trocado por `'admin'`); `[Produces("application/json")]` no controller (sobrescrevia o `application/problem+json` dos erros). Bug encontrado pela integração e corrigido: com `type` desconhecido, o documento não era validado.

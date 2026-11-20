@@ -39,8 +39,11 @@ Não crie para detalhes de implementação locais, nomes de variáveis ou escolh
 | [0012](0012-mock-da-api-com-json-server-e-wrapper.md) | Mockar a API com json-server e um wrapper com as regras | accepted | — |
 | [0013](0013-testes-do-front-com-vitest-testing-library-e-msw.md) | Testes do front com Vitest, Testing Library e MSW (sem E2E) | accepted | — |
 | [0014](0014-notificacoes-persistidas-com-polling.md) | Notificações persistidas e entregues por polling | accepted | — |
+| [0015](0015-guardas-de-commit-com-git-hooks.md) | Guardas de commit com git hooks versionados | accepted | — |
 
 ## Decisões pendentes (candidatas a ADR)
+
+- Tipo de usuário `Administrador`: um protótipo anterior do backend tinha esse tipo, mas o [challenge](../challenge.md) só prevê comum e lojista. Existe (com quais permissões) ou fica fora?
 
 - Representação de dinheiro (`decimal` + `NUMERIC(15,2)` vs. centavos `long`/`BIGINT`)
 - Controle de concorrência nas carteiras (lock pessimista vs. otimista)

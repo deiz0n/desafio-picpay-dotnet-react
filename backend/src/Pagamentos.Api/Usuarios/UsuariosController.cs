@@ -24,7 +24,7 @@ public sealed class UsuariosController(CadastrarUsuarioHandler cadastrarUsuarioH
 
         var resultado = await cadastrarUsuarioHandler.ExecutarAsync(command, cancellationToken);
         if (!resultado.Sucesso)
-            return Problemas.De(resultado.Erro!);
+            return Problemas.De(resultado.Erro);
 
         var usuario = resultado.Valor;
         // Sem Location: o contrato não tem GET /users/{id}.

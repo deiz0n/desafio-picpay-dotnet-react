@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Pagamentos.Domain.Erros;
 
 /// <summary>
@@ -10,6 +12,8 @@ public class Result
 
     public Erro? Erro { get; }
 
+    /// <summary>Quando <c>false</c>, o compilador sabe que <see cref="Erro"/> não é nulo.</summary>
+    [MemberNotNullWhen(false, nameof(Erro))]
     public bool Sucesso => Erro is null;
 
     public static Result Ok() => new(null);

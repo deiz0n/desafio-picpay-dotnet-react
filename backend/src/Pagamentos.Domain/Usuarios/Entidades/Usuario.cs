@@ -54,10 +54,11 @@ public sealed partial class Usuario
         if (tipo is null)
             erros.Add(new("tipo", "Tipo de usuário inválido."));
 
-        if (erros.Count > 0)
+        // O pattern "is not TipoUsuario tipoValido" prova ao compilador que, daqui para baixo, o tipo existe.
+        if (erros.Count > 0 || tipo is not TipoUsuario tipoValido)
             return ErrosUsuario.Validacao(erros);
 
-        return Result.Ok(new Usuario(nome, email, documento, tipo!.Value, hasher.GerarHash(senha)));
+        return Result.Ok(new Usuario(nome, email, documento, tipoValido, hasher.GerarHash(senha)));
     }
 
     /// <summary>Recebe o id gerado pelo banco. Só pode ser chamado uma vez.</summary>

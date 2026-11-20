@@ -22,7 +22,7 @@ public sealed class CadastrarUsuarioHandler(
         var criacao = Usuario.Criar(
             command.Nome, command.Email, command.Documento, command.Tipo, command.Senha, hasherSenha);
         if (!criacao.Sucesso)
-            return criacao.Erro!;
+            return criacao.Erro;
 
         var usuario = criacao.Valor;
 
@@ -40,7 +40,7 @@ public sealed class CadastrarUsuarioHandler(
             if (!adicao.Sucesso)
             {
                 await unidadeDeTrabalho.DesfazerAsync(cancellationToken);
-                return adicao.Erro!;
+                return adicao.Erro;
             }
 
             await carteiraRepositorio.AdicionarAsync(Carteira.Abrir(usuario.Id), cancellationToken);

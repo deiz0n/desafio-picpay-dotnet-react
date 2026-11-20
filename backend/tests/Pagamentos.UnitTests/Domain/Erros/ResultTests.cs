@@ -53,6 +53,17 @@ public class ResultTests
     }
 
     [Fact]
+    public void Erro_AposChecarSucessoFalso_CompiladorSabeQueNaoEhNulo()
+    {
+        Result<int> resultado = ErroQualquer;
+
+        // Sem "!": compila (com warnings como erro) só porque Sucesso tem [MemberNotNullWhen].
+        var codigo = resultado.Sucesso ? null : resultado.Erro.Codigo;
+
+        Assert.Equal("validation_error", codigo);
+    }
+
+    [Fact]
     public void Erro_SemCampos_TemListaDeCamposVazia()
     {
         Assert.Empty(ErroQualquer.Campos);

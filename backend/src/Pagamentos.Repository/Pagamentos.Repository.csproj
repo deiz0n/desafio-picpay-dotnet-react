@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="../Pagamentos.Domain/Pagamentos.Domain.csproj" />
+    <ProjectReference Include="../Pagamentos.Infrastructure/Pagamentos.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

@@ -69,7 +69,7 @@ Todo erro é `application/problem+json`, no formato do [frontend.md](../frontend
   - `usuarios_documento_check`: 11 dígitos para comum, 14 para lojista.
 - `carteiras`: `id BIGINT` identity, `usuario_id` (FK, `UNIQUE` — uma carteira por usuário), `saldo NUMERIC(15,2)` com `CHECK (saldo >= 0)`, `data_criacao`.
 - Tipo na API `common`/`merchant` ↔ no banco `comum`/`lojista`.
-- Local: `docker compose up -d postgres` aplica as migrations num volume novo (banco `pagamentos`, usuário/senha `postgres`).
+- Local: `docker compose up -d postgres` aplica as migrations num volume novo (banco `pagamentos`; usuário e senha obrigatórios no `.env`, sem valor padrão — modelo em `.env.example`). A API lê `ConnectionStrings:Pagamentos` de user-secrets ou da variável `ConnectionStrings__Pagamentos` e não sobe sem ela.
 
 ### Código
 
@@ -79,7 +79,7 @@ Todo erro é `application/problem+json`, no formato do [frontend.md](../frontend
 | Application | `Usuarios/CadastrarUsuario/` (`CadastrarUsuarioCommand`, `CadastrarUsuarioHandler`, `UsuarioCadastradoDTO`) |
 | Repository / Infrastructure | `Repository/Usuarios/` (`UsuarioRepositorio`, `CarteiraRepositorio`, `TipoUsuarioNoBanco`) · `Infrastructure/Data/` (`UnidadeDeTrabalho`, `IConexaoDeBanco`) · `Infrastructure/Seguranca/HasherSenha` |
 | Api | `Usuarios/` (`UsuariosController`, `CadastrarUsuarioRequest`, `UsuarioResponse`, `TipoUsuarioNaApi`) · `Erros/` (`Problemas`, `RespostaDeBindingInvalido`, `TratadorDeExcecoes`) · `Configuracao/InjecaoDeDependencias` |
-| Testes | `tests/Pagamentos.UnitTests` (51) · `tests/Pagamentos.IntegrationTests` (36; Postgres 17 via Testcontainers, um container por coleção, tabelas limpas antes de cada teste) |
+| Testes | `tests/Pagamentos.UnitTests` (51) · `tests/Pagamentos.IntegrationTests` (37; Postgres 17 via Testcontainers, um container por coleção, tabelas limpas antes de cada teste) |
 
 Configuração comum em `backend/Directory.Build.props` (`net10.0`, nullable, `TreatWarningsAsErrors`). Pacotes Microsoft fixados em 10.0.15 (as versões 11.x não suportam `net10.0`).
 
@@ -110,8 +110,6 @@ Configuração comum em `backend/Directory.Build.props` (`net10.0`, nullable, `T
 
 - Movimentação `welcome_credit` do saldo inicial (entra com o modelo de movimentações/transferências).
 - **CNPJ alfanumérico:** desde julho de 2026 a Receita emite CNPJ com letras nas 12 primeiras posições; o contrato atual ("só dígitos"), o validador e o `CHECK` do banco recusam esses lojistas.
-- 🟡 (review) Validar `ConnectionStrings:Pagamentos` na subida da API; hoje a ausência só aparece na primeira requisição.
-- 🟡 (review) Senha do Postgres local versionada em `appsettings.Development.json` (mesmo padrão do compose); usar *user-secrets* ou variável de ambiente quando houver deploy.
 - 🟡 (review) O hash da senha é calculado antes da checagem de duplicidade, então um 409 também paga o custo do PBKDF2.
 - 🟡 (review) Nomes de `MigrationsTests` com duas partes; cada teste de endpoint cria sua própria `ApiFactory` (compartilhar quando a suíte crescer).
 - Correlation id, health check, CORS, API no compose e seed — itens próprios do roadmap.
@@ -119,3 +117,4 @@ Configuração comum em `backend/Directory.Build.props` (`net10.0`, nullable, `T
 ## Histórico
 
 - 2026-11-20: entregue via /goal ([#5](https://github.com/deiz0n/desafio-picpay-dotnet-react/pull/5)). Tentado e descartado: o teste de `CHECK` com `'administrador'` (estoura o `VARCHAR(10)` antes do `CHECK`; trocado por `'admin'`); `[Produces("application/json")]` no controller (sobrescrevia o `application/problem+json` dos erros). Bug encontrado pela integração e corrigido: com `type` desconhecido, o documento não era validado.
+- 2026-11-20 (mesmo PR): credenciais removidas do repositório após alerta do GitGuardian (`postgres`/`postgres` no `compose.yaml` e no `appsettings.Development.json`). O compose passou a exigir `POSTGRES_USER`/`POSTGRES_PASSWORD` do `.env` (sem padrão; modelo em `.env.example`), a API lê a connection string de user-secrets ou de `ConnectionStrings__Pagamentos` e falha na subida se ela faltar (`ConfiguracaoTests.Subida_SemConnectionString_FalhaComMensagemClara`). Os valores antigos eram padrões de desenvolvimento, não credenciais reais, mas continuam no histórico dos commits `be0cf44` e `6dbaba1`.

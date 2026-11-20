@@ -61,7 +61,8 @@ Skill: [`.agents/skills/goal/SKILL.md`](.agents/skills/goal/SKILL.md). Também p
 
 | Ação | Comando |
 | --- | --- |
-| Postgres local (aplica as migrations num volume novo) | `docker compose up -d postgres` |
+| Postgres local (exige `.env` a partir do `.env.example`; aplica as migrations num volume novo) | `docker compose up -d postgres` |
+| Connection string da API (uma vez por máquina) | `dotnet user-secrets set "ConnectionStrings:Pagamentos" "Host=localhost;Port=5432;Database=pagamentos;Username=<usuario>;Password=<senha>" --project backend/src/Pagamentos.Api` |
 | Build | `dotnet build backend/Pagamentos.slnx` |
 | Testes (todos) | `dotnet test backend/Pagamentos.slnx` — integração exige Docker rodando |
 | Testes filtrados | `dotnet test backend/Pagamentos.slnx --filter "FullyQualifiedName~NomeDaClasse"` |

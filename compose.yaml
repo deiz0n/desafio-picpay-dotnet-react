@@ -2,10 +2,11 @@ services:
   postgres:
     image: postgres:17-alpine
     container_name: pagamentos-postgres
+    # Credenciais vêm do .env (copie o .env.example); sem valor padrão de propósito.
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-pagamentos}
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:?defina POSTGRES_USER no .env (veja .env.example)}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env (veja .env.example)}
     ports:
       - "5432:5432"
     volumes:

@@ -12,11 +12,24 @@ Projeto de estudos para implementação do desafio do PicPay (plataforma de paga
 
 API em C# / .NET 10 (ASP.NET Core), em [`backend/`](backend/), com PostgreSQL 17. Requer o SDK do .NET 10 e Docker.
 
+Nenhuma credencial fica no repositório. Configure uma vez por máquina:
+
+1. Copie `.env.example` para `.env` e escolha usuário e senha do Postgres local (o `.env` é ignorado pelo git e bloqueado pelo hook de pre-commit).
+2. Guarde a connection string da API em [user-secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets), com os mesmos valores do `.env`:
+
+```bash
+dotnet user-secrets set "ConnectionStrings:Pagamentos" "Host=localhost;Port=5432;Database=pagamentos;Username=<usuario>;Password=<senha>" --project backend/src/Pagamentos.Api
+```
+
+Alternativa: a variável de ambiente `ConnectionStrings__Pagamentos`. Sem nenhuma das duas, a API não sobe e diz o que falta.
+
 ```bash
 docker compose up -d postgres                                  # banco local (aplica database/migrations num volume novo)
 dotnet run --project backend/src/Pagamentos.Api                # API em http://localhost:5186
 dotnet test backend/Pagamentos.slnx                            # unidade + integração (Testcontainers, Docker ligado)
 ```
+
+Os testes não precisam de `.env` nem de user-secrets: o Testcontainers cria um Postgres descartável com credenciais próprias.
 
 Endpoints disponíveis: `POST /users` (cadastro de usuário comum ou lojista com carteira de R$ 1.000,00) — detalhes na [SPEC 02](docs/specs/02-fundacao-backend-cadastro.md).
 

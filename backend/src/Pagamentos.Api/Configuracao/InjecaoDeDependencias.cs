@@ -17,8 +17,12 @@ public static class InjecaoDeDependencias
         // trocar a connection string antes do primeiro uso.
         services.AddSingleton(sp =>
         {
-            var connectionString = sp.GetRequiredService<IConfiguration>().GetConnectionString("Pagamentos")
-                ?? throw new InvalidOperationException("ConnectionStrings:Pagamentos não configurada.");
+            var connectionString = sp.GetRequiredService<IConfiguration>().GetConnectionString("Pagamentos");
+            if (string.IsNullOrWhiteSpace(connectionString))
+                throw new InvalidOperationException(
+                    "ConnectionStrings:Pagamentos não configurada. Em desenvolvimento, use " +
+                    "'dotnet user-secrets set \"ConnectionStrings:Pagamentos\" \"...\"' (veja o README) " +
+                    "ou a variável de ambiente ConnectionStrings__Pagamentos.");
             return NpgsqlDataSource.Create(connectionString);
         });
 

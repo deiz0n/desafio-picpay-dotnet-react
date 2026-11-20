@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: pagamentos-postgres
+    # Credenciais vêm do .env (copie o .env.example); sem valor padrão de propósito.
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-pagamentos}
+      POSTGRES_USER: ${POSTGRES_USER:?defina POSTGRES_USER no .env (veja .env.example)}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env (veja .env.example)}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Executadas em ordem alfabética, só quando o volume é criado (ADR 0004).
+      - ./database/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

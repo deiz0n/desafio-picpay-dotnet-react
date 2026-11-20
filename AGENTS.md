@@ -57,14 +57,16 @@ Skill: [`.agents/skills/goal/SKILL.md`](.agents/skills/goal/SKILL.md). Também p
 
 ### Backend
 
-> A solução .NET ainda não existe. O primeiro `/goal` que criá-la deve confirmar/ajustar estes caminhos.
+> Solução em `backend/Pagamentos.slnx` (formato `.slnx`, padrão do .NET 10): `src/` com os 5 projetos do ADR 0003 e `tests/` com `Pagamentos.UnitTests` e `Pagamentos.IntegrationTests`. Migrations SQL em `database/migrations/`.
 
 | Ação | Comando |
 | --- | --- |
-| Build | `dotnet build backend/Pagamentos.sln` |
-| Testes (todos) | `dotnet test backend/Pagamentos.sln` — integração exige Docker rodando |
-| Testes filtrados | `dotnet test backend/Pagamentos.sln --filter "FullyQualifiedName~NomeDaClasse"` |
-| Formatação | `dotnet format backend/Pagamentos.sln --verify-no-changes` |
+| Postgres local (exige `.env` a partir do `.env.example`; aplica as migrations num volume novo) | `docker compose up -d postgres` |
+| Connection string da API (uma vez por máquina) | `dotnet user-secrets set "ConnectionStrings:Pagamentos" "Host=localhost;Port=5432;Database=pagamentos;Username=<usuario>;Password=<senha>" --project backend/src/Pagamentos.Api` |
+| Build | `dotnet build backend/Pagamentos.slnx` |
+| Testes (todos) | `dotnet test backend/Pagamentos.slnx` — integração exige Docker rodando |
+| Testes filtrados | `dotnet test backend/Pagamentos.slnx --filter "FullyQualifiedName~NomeDaClasse"` |
+| Formatação | `dotnet format backend/Pagamentos.slnx --verify-no-changes` |
 | PR | `gh pr create --base develop --title "…" --body-file <arquivo>` |
 
 ### Front-end (`frontend/`, rode dentro da pasta)

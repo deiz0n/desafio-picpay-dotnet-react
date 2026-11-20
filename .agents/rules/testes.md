@@ -49,7 +49,7 @@ public class TransferirTests(PostgresFixture db) : IClassFixture<PostgresFixture
 
 ## Comandos
 
-- Tudo: `dotnet test backend/Pagamentos.sln` (Docker precisa estar rodando)
-- Uma classe: `dotnet test backend/Pagamentos.sln --filter "FullyQualifiedName~TransferirTests"`
+- Tudo: `dotnet test backend/Pagamentos.slnx` (Docker precisa estar rodando)
+- Uma classe: `dotnet test backend/Pagamentos.slnx --filter "FullyQualifiedName~TransferirTests"`
 - Só unidade: `dotnet test backend/tests/Pagamentos.UnitTests`
 

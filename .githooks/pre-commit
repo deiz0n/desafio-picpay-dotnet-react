@@ -20,9 +20,9 @@ Remova com: git restore --staged <arquivo>"
 fi
 
 # 2) Backend: compila (só quando a solution existir)
-if grep -Eq '^backend/' <<< "$staged" && [[ -f "$ROOT/backend/Pagamentos.sln" ]]; then
-  echo "pre-commit: dotnet build backend/Pagamentos.sln"
-  dotnet build "$ROOT/backend/Pagamentos.sln" -nologo -v q -clp:ErrorsOnly \
+if grep -Eq '^backend/' <<< "$staged" && [[ -f "$ROOT/backend/Pagamentos.slnx" ]]; then
+  echo "pre-commit: dotnet build backend/Pagamentos.slnx"
+  dotnet build "$ROOT/backend/Pagamentos.slnx" -nologo -v q -clp:ErrorsOnly \
     || falha "build do backend falhou."
 fi
 

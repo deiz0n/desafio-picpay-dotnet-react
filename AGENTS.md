@@ -50,7 +50,8 @@ Skill: [`.agents/skills/goal/SKILL.md`](.agents/skills/goal/SKILL.md). Também p
 3. Decisão arquitetural nova (tecnologia, padrão, trade-off difícil de reverter) → confirmar com o usuário e registrar ADR. Não decidir em silêncio.
 4. Commits e branches: [`.agents/rules/commits-conventional.md`](.agents/rules/commits-conventional.md).
 5. Nunca fazer push direto em `develop`/`main`, nem `--force`. PR sempre com base `develop`. Push e PR só após confirmação do usuário.
-6. Responder em **Português Brasil**.
+6. Hooks de git versionados em `.githooks/` (bloqueio de `.env`, build do backend, lint/tipos do front). Ativar uma vez por clone com `git config core.hooksPath .githooks`. Nunca usar `--no-verify`: hook falhou → corrija a causa ([ADR 0015](docs/adr/0015-guardas-de-commit-com-git-hooks.md)).
+7. Responder em **Português Brasil**.
 
 ## Comandos
 

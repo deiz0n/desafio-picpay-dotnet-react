@@ -1,6 +1,11 @@
 # Estado de trabalho do /goal (rascunho local, não é documentação)
 .goal/
 
+# Segredos (o .githooks/pre-commit também bloqueia — ADR 0015)
+.env
+.env.*
+!.env.example
+
 # .NET
 bin/
 obj/

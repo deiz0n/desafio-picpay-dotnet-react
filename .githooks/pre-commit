@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# pre-commit versionado (ADR 0015): vale para Claude Code, Antigravity, Codex e humanos.
+# Ativar uma vez por clone:  git config core.hooksPath .githooks
+#
+# Só checagens rápidas. Testes completos ficam na fase 5 do /goal.
+set -uo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+staged="$(git diff --cached --name-only --diff-filter=ACMR)"
+[[ -z "$staged" ]] && exit 0
+
+falha() { echo "pre-commit: $*" >&2; exit 1; }
+
+# 1) Segredos: nenhum .env no stage (.env.example é permitido)
+envs="$(grep -E '(^|/)\.env(\.[^/]+)?$' <<< "$staged" | grep -vE '\.env\.example$' || true)"
+if [[ -n "$envs" ]]; then
+  falha "arquivo de segredo no stage:
+$envs
+Remova com: git restore --staged <arquivo>"
+fi
+
+# 2) Backend: compila (só quando a solution existir)
+if grep -Eq '^backend/' <<< "$staged" && [[ -f "$ROOT/backend/Pagamentos.sln" ]]; then
+  echo "pre-commit: dotnet build backend/Pagamentos.sln"
+  dotnet build "$ROOT/backend/Pagamentos.sln" -nologo -v q -clp:ErrorsOnly \
+    || falha "build do backend falhou."
+fi
+
+# 3) Front-end: lint + tipos
+if grep -Eq '^frontend/' <<< "$staged"; then
+  [[ -d "$ROOT/frontend/node_modules" ]] \
+    || falha "frontend/node_modules não existe. Rode: (cd frontend && npm install)"
+  echo "pre-commit: npm run lint + typecheck (frontend)"
+  (cd "$ROOT/frontend" && npm run --silent lint && npm run --silent typecheck) \
+    || falha "lint ou typecheck do front-end falhou."
+fi
+
+exit 0

@@ -7,7 +7,7 @@ description: Contexto do desafio back-end "pagamento simplificado" (transferênc
 
 Fonte original: [docs/challenge.md](../../../docs/challenge.md). Decisões em vigor: [docs/adr/](../../../docs/adr/README.md). Consulte-o em caso de dúvida; este skill resume o que importa para tomar decisões de código.
 
-**Stack (ADRs 0002–0007):** C# / .NET 10, ASP.NET Core Controllers, Clean Architecture no padrão do CVL, PostgreSQL + Dapper, Unit of Work, testes com xUnit + Testcontainers. Dicas de PHP abaixo valem só como referência; use os equivalentes .NET. **Modo didático:** no `/goal` o agente implementa com checkpoints explicativos; fora dele, código só com pedido explícito (`.agents/rules/didatico.md`).
+**Stack (ADRs 0002–0007):** C# / .NET 10, ASP.NET Core Controllers, Clean Architecture no padrão do CVL, PostgreSQL + Dapper, Unit of Work, testes com xUnit + Testcontainers. **Front (ADRs 0008–0014):** React + Vite + TypeScript, `react-router-dom`, Tailwind v4 + shadcn/ui, React Hook Form + Zod, TanStack Query, Vitest + Testing Library + MSW (sem E2E), mock com json-server. Dicas de PHP abaixo valem só como referência; use os equivalentes .NET. **Modo didático:** no `/goal` o agente implementa com checkpoints explicativos; fora dele, código só com pedido explícito (`.agents/rules/didatico.md`).
 
 ## Propósito
 
@@ -22,7 +22,7 @@ Projeto **de estudos**: o objetivo é aprender e praticar os conceitos, não ent
 - Dois tipos de usuário: **comum** e **lojista**. Ambos têm carteira com saldo.
 - Campos obrigatórios: nome completo, documento (CPF para comum, CNPJ para lojista), e-mail, senha.
 - **CPF/CNPJ e e-mail são únicos** — garantir com constraint `UNIQUE` no banco, não só validação na aplicação.
-- Fora do escopo: fluxo de cadastro, frontend, autenticação. Pode-se usar seed/migration para criar usuários de teste.
+- O **enunciado** deixa fora o fluxo de cadastro, o frontend e a autenticação, mas o **projeto** os incluiu ([ADR 0008](../../../docs/adr/0008-spa-react-vite-typescript-com-react-router.md)): front **DuduPay** em `frontend/` (plano e contrato em [docs/frontend.md](../../../docs/frontend.md)), construído antes do backend com um mock; cadastro e auth reais entram no backend depois. Seed/migration continuam úteis para usuários de teste.
 
 ## Regras da transferência (núcleo do desafio)
 

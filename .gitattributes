@@ -1,0 +1,4 @@
+# Scripts executados pelo bash precisam de LF, mesmo com core.autocrlf=true no Windows
+# (CRLF quebra o shebang e gera erros "$'\r': command not found").
+.githooks/* text eol=lf
+*.sh        text eol=lf

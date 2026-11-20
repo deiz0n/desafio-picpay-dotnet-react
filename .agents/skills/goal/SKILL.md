@@ -51,6 +51,7 @@ Rode e, se algo falhar, **pare** e mostre o comando para corrigir:
 | É repo git | `git rev-parse --show-toplevel` | pedir a URL / `git init` + `git remote add origin …` |
 | Árvore limpa | `git status --porcelain` vazio | pedir para commitar/stash (nunca descartar mudanças do usuário) |
 | `develop` existe | `git fetch origin` + `git rev-parse --verify origin/develop` | perguntar se deve criar a partir de `main` |
+| Hooks de git ativos | `git config core.hooksPath` = `.githooks` | `git config core.hooksPath .githooks` ([ADR 0015](../../../docs/adr/0015-guardas-de-commit-com-git-hooks.md)) |
 | GitHub CLI | `gh auth status` | `gh auth login` (só é bloqueante na fase 8) |
 | Docker | `docker info` | bloqueante só se houver/for haver testes de integração |
 | .NET | `dotnet --version` (≥ 10) | instalar o SDK |

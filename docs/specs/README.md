@@ -31,4 +31,4 @@ docs/specs/
 
 | Nº | Título | PR | ADRs |
 | --- | --- | --- | --- |
-| — | — | — | — |
+| [01](01-fundacao-frontend.md) | Fundação do front-end (DuduPay) | [#4](https://github.com/deiz0n/desafio-picpay-dotnet-react/pull/4) | [0008](../adr/0008-spa-react-vite-typescript-com-react-router.md), [0009](../adr/0009-ui-com-tailwind-shadcn-e-identidade-dudupay.md), [0013](../adr/0013-testes-do-front-com-vitest-testing-library-e-msw.md) |

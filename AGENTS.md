@@ -15,8 +15,11 @@ Regras completas: [`.agents/rules/didatico.md`](.agents/rules/didatico.md).
 
 C# / .NET 10, ASP.NET Core com Controllers, Clean Architecture no padrão do CVL (`Pagamentos.Api` → `Application` → `Domain` ← `Repository` / `Infrastructure`), Handlers sem MediatR, Result pattern, PostgreSQL + Dapper, migrations SQL, Unit of Work. Testes: xUnit + `WebApplicationFactory` + Testcontainers. Detalhes e porquês: ADRs 0002–0007.
 
+Front-end **DuduPay** (`frontend/`, ainda não criado): SPA React + Vite + TypeScript, `react-router-dom`, Tailwind v4 + shadcn/ui, React Hook Form + Zod, TanStack Query, Vitest + Testing Library + MSW (sem E2E), construído antes do backend sobre um mock json-server. Plano, contrato da API e fatias: **`docs/frontend.md`**; porquês: ADRs 0008–0014.
+
 - Enunciado e regras de negócio: **`docs/challenge.md`** (skill `picpay-challenge` resume).
-- O que falta entregar: **`docs/roadmap.md`** — confira antes de tratar um pedido como feature nova.
+- O que falta entregar: **`docs/roadmap.md`** — confira antes de tratar um pedido como feature nova (inclui as fatias F1–F9 do front).
+- Contrato da API e plano do front: **`docs/frontend.md`**.
 - Decisões em vigor: **`docs/adr/README.md`** — respeite os ADRs `accepted`.
 - O que já foi construído: **`docs/specs/`** — SPECs finais de cada `/goal`.
 
@@ -47,11 +50,14 @@ Skill: [`.agents/skills/goal/SKILL.md`](.agents/skills/goal/SKILL.md). Também p
 3. Decisão arquitetural nova (tecnologia, padrão, trade-off difícil de reverter) → confirmar com o usuário e registrar ADR. Não decidir em silêncio.
 4. Commits e branches: [`.agents/rules/commits-conventional.md`](.agents/rules/commits-conventional.md).
 5. Nunca fazer push direto em `develop`/`main`, nem `--force`. PR sempre com base `develop`. Push e PR só após confirmação do usuário.
-6. Responder em **Português Brasil**.
+6. Hooks de git versionados em `.githooks/` (bloqueio de `.env`, build do backend, lint/tipos do front). Ativar uma vez por clone com `git config core.hooksPath .githooks`. Nunca usar `--no-verify`: hook falhou → corrija a causa ([ADR 0015](docs/adr/0015-guardas-de-commit-com-git-hooks.md)).
+7. Responder em **Português Brasil**.
 
 ## Comandos
 
-> A solução ainda não existe. O primeiro `/goal` que criá-la deve confirmar/ajustar estes caminhos.
+### Backend
+
+> A solução .NET ainda não existe. O primeiro `/goal` que criá-la deve confirmar/ajustar estes caminhos.
 
 | Ação | Comando |
 | --- | --- |
@@ -60,4 +66,21 @@ Skill: [`.agents/skills/goal/SKILL.md`](.agents/skills/goal/SKILL.md). Também p
 | Testes filtrados | `dotnet test backend/Pagamentos.sln --filter "FullyQualifiedName~NomeDaClasse"` |
 | Formatação | `dotnet format backend/Pagamentos.sln --verify-no-changes` |
 | PR | `gh pr create --base develop --title "…" --body-file <arquivo>` |
+
+### Front-end (`frontend/`, rode dentro da pasta)
+
+> Node ≥ 22.12 ou ≥ 24 (`frontend/.nvmrc` = 24). Instalação: `npm install` (as versões são exatas, `save-exact`). O mock da API (`npm run mock`) chega na fatia F2.
+
+| Ação | Comando |
+| --- | --- |
+| Rodar em desenvolvimento | `npm run dev` |
+| Testes (todos) | `npm test` (Vitest) |
+| Testes filtrados | `npm test -- <trecho do arquivo ou do nome>` |
+| Testes em modo observação | `npm run test:watch` |
+| Tipos | `npm run typecheck` |
+| Lint | `npm run lint` |
+| Formatação (verificar / aplicar) | `npm run format:check` / `npm run format` |
+| Build | `npm run build` |
+
+Antes de concluir uma fatia do front: `npm run lint`, `npm run format:check`, `npm run typecheck`, `npm test` e `npm run build` verdes.
 

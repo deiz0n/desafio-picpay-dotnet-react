@@ -11,7 +11,7 @@ Ao concluir um `/goal` que entrega um item, atualize a linha (status + SPEC + AD
 | Item | Status | Spec | ADRs |
 | --- | --- | --- | --- |
 | Escolha de linguagem/framework | ✅ | — | [0002](adr/0002-usar-csharp-dotnet-aspnet-core.md), [0004](adr/0004-postgres-com-dapper-e-migrations-sql.md) |
-| Modelo de dados (usuários, carteiras, transferências) com `UNIQUE` em documento e e-mail | ⏳ | — | — |
+| Modelo de dados (usuários, carteiras, transferências) com `UNIQUE` em documento e e-mail — usuários e carteiras feitos; transferências pendentes | 🚧 | [02](specs/02-fundacao-backend-cadastro.md) | [0016](adr/0016-sem-tipo-de-usuario-administrador.md), [0017](adr/0017-dinheiro-em-decimal-e-numeric.md) |
 | `POST /transfer` com regras (lojista não envia, saldo, valor > 0, payer ≠ payee) | ⏳ | — | — |
 | Consulta ao autorizador externo (timeout, falha = não autorizado) | ⏳ | — | — |
 | Transação com rollback e controle de concorrência | ⏳ | — | [0005](adr/0005-unit-of-work-para-transacoes.md) |
@@ -21,7 +21,7 @@ Ao concluir um `/goal` que entrega um item, atualize a linha (status + SPEC + AD
 
 | Item | Status | Spec | ADRs |
 | --- | --- | --- | --- |
-| API RESTful com respostas de erro consistentes | ⏳ | — | — |
+| API RESTful com respostas de erro consistentes — Problem Details, 422 no binding e 500 sem vazamento já valem para toda a API | 🚧 | [02](specs/02-fundacao-backend-cadastro.md) | [0019](adr/0019-result-e-unidade-de-trabalho-no-domain.md) |
 | Git com commits pequenos e descritivos | ⏳ | — | — |
 | Código limpo e organizado | ⏳ | — | — |
 
@@ -29,9 +29,9 @@ Ao concluir um `/goal` que entrega um item, atualize a linha (status + SPEC + AD
 
 | Item | Status | Spec | ADRs |
 | --- | --- | --- | --- |
-| Docker Compose (app + banco + fila/cache) com um comando | ⏳ | — | — |
-| Testes de unidade | ⏳ | — | [0007](adr/0007-xunit-com-testcontainers.md) |
-| Testes de integração | ⏳ | — | [0007](adr/0007-xunit-com-testcontainers.md) |
+| Docker Compose (app + banco + fila/cache) com um comando — hoje só o Postgres com as migrations | 🚧 | [02](specs/02-fundacao-backend-cadastro.md) | [0004](adr/0004-postgres-com-dapper-e-migrations-sql.md) |
+| Testes de unidade | ✅ | [02](specs/02-fundacao-backend-cadastro.md) | [0007](adr/0007-xunit-com-testcontainers.md) |
+| Testes de integração | ✅ | [02](specs/02-fundacao-backend-cadastro.md) | [0007](adr/0007-xunit-com-testcontainers.md) |
 | SOLID e Design Patterns aplicados | 🚧 | — | [0003](adr/0003-clean-architecture-em-camadas-padrao-cvl.md) |
 | Cache | ⏳ | — | — |
 | README com execução, decisões e melhorias | ⏳ | — | — |
@@ -75,10 +75,10 @@ Itens que o contrato do [frontend.md](frontend.md#impacto-no-backend-itens-deriv
 
 | Item | Status | Spec | ADRs |
 | --- | --- | --- | --- |
-| Cadastro de usuários com saldo inicial (`welcome_credit`) | ⏳ | — | — |
+| Cadastro de usuários com saldo inicial (`welcome_credit`) — usuário + carteira com R$ 1.000,00 numa transação; a movimentação `welcome_credit` chega com o modelo de movimentações | 🚧 | [02](specs/02-fundacao-backend-cadastro.md) | [0016](adr/0016-sem-tipo-de-usuario-administrador.md), [0017](adr/0017-dinheiro-em-decimal-e-numeric.md), [0018](adr/0018-hash-de-senha-com-passwordhasher.md) |
 | Autenticação (login e token; decisão de JWT em ADR) | ⏳ | — | — |
 | Endpoints de leitura (`/users/me`, busca, `/wallets/me`, `/transactions/me`, resumo) | ⏳ | — | — |
 | Notificações persistidas (`/notifications`) | ⏳ | — | [0014](adr/0014-notificacoes-persistidas-com-polling.md) |
 | `payer` validado contra o usuário autenticado | ⏳ | — | — |
 | CORS para o front | ⏳ | — | — |
-| Erros em Problem Details com os `code` do contrato | ⏳ | — | — |
+| Erros em Problem Details com os `code` do contrato — `validation_error`, `email_taken`, `document_taken` e `internal_error` feitos | 🚧 | [02](specs/02-fundacao-backend-cadastro.md) | [0019](adr/0019-result-e-unidade-de-trabalho-no-domain.md) |

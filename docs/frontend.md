@@ -38,7 +38,7 @@ Convenções:
 - JSON; campos em **inglês** (como o contrato do desafio: `value`, `payer`, `payee`); ids inteiros; datas ISO 8601 em UTC.
 - Autenticação: `Authorization: Bearer <token>` em tudo, exceto `POST /auth/login` e `POST /users`. Sem token ou token inválido → `401`.
 - Tipo de usuário: `"common"` (CPF) ou `"merchant"` (CNPJ). Documento sempre **só dígitos** na API.
-- Valores em reais, número decimal com 2 casas (`100.0`), como no enunciado. O front trabalha internamente em centavos inteiros para somar e validar e só converte na borda. ⚠️ A representação final de dinheiro no backend ainda é uma [decisão pendente](adr/README.md#decisões-pendentes-candidatas-a-adr); se mudar, este contrato muda junto.
+- Valores em reais, número decimal com 2 casas (`100.0`), como no enunciado. O front trabalha internamente em centavos inteiros para somar e validar e só converte na borda. O backend usa `decimal` + `NUMERIC(15,2)` em reais ([ADR 0017](adr/0017-dinheiro-em-decimal-e-numeric.md)), então o contrato fica como está.
 - Erros em **Problem Details** (`application/problem+json`):
 
 ```json
@@ -203,7 +203,7 @@ O front-first deixa uma lista de trabalho para o backend, registrada no [roadmap
 | Risco | Mitigação |
 | --- | --- |
 | O backend real diverge do mock | Este documento é a especificação; testes de integração do backend afirmam o contrato |
-| Dinheiro em ponto flutuante no JS | Centavos inteiros internamente; conversão só na borda; decisão pendente do backend (`decimal` vs centavos) |
+| Dinheiro em ponto flutuante no JS | Centavos inteiros internamente; conversão só na borda; backend em `decimal` ([ADR 0017](adr/0017-dinheiro-em-decimal-e-numeric.md)) |
 | `json-server` 1.x é beta | Versão exata fixada; fallback para a 0.17 ([ADR 0012](adr/0012-mock-da-api-com-json-server-e-wrapper.md)) |
 | Tema escuro sem contraste | Paleta escura definida e medida na F1, antes de qualquer tela |
 | Handlers do MSW divergem do wrapper do mock | Ambos seguem este contrato; ao mudar o contrato, atualizar os dois |

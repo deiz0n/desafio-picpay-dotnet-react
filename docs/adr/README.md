@@ -40,12 +40,13 @@ Não crie para detalhes de implementação locais, nomes de variáveis ou escolh
 | [0013](0013-testes-do-front-com-vitest-testing-library-e-msw.md) | Testes do front com Vitest, Testing Library e MSW (sem E2E) | accepted | — |
 | [0014](0014-notificacoes-persistidas-com-polling.md) | Notificações persistidas e entregues por polling | accepted | — |
 | [0015](0015-guardas-de-commit-com-git-hooks.md) | Guardas de commit com git hooks versionados | accepted | — |
+| [0016](0016-sem-tipo-de-usuario-administrador.md) | Não ter o tipo de usuário Administrador | accepted | [02](../specs/02-fundacao-backend-cadastro.md) |
+| [0017](0017-dinheiro-em-decimal-e-numeric.md) | Representar dinheiro com `decimal` e `NUMERIC(15,2)` | accepted | [02](../specs/02-fundacao-backend-cadastro.md) |
+| [0018](0018-hash-de-senha-com-passwordhasher.md) | Hash de senha com o `PasswordHasher<T>` do ASP.NET Core Identity | accepted | [02](../specs/02-fundacao-backend-cadastro.md) |
+| [0019](0019-result-e-unidade-de-trabalho-no-domain.md) | `Result` e `IUnidadeDeTrabalho` no projeto Domain | accepted | [02](../specs/02-fundacao-backend-cadastro.md) |
 
 ## Decisões pendentes (candidatas a ADR)
 
-- Tipo de usuário `Administrador`: um protótipo anterior do backend tinha esse tipo, mas o [challenge](../challenge.md) só prevê comum e lojista. Existe (com quais permissões) ou fica fora?
-
-- Representação de dinheiro (`decimal` + `NUMERIC(15,2)` vs. centavos `long`/`BIGINT`)
 - Controle de concorrência nas carteiras (lock pessimista vs. otimista)
 - Notificação assíncrona (fila em tabela/outbox, `BackgroundService`, RabbitMQ…)
 - Autorizador chamado dentro ou fora da transação

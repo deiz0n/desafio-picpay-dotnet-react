@@ -8,6 +8,18 @@ Projeto de estudos para implementação do desafio do PicPay (plataforma de paga
 - **Decisões de arquitetura (ADRs):** [`docs/adr/`](docs/adr/)
 - **Plano do front-end (DuduPay):** [`docs/frontend.md`](docs/frontend.md)
 
+## Backend
+
+API em C# / .NET 10 (ASP.NET Core), em [`backend/`](backend/), com PostgreSQL 17. Requer o SDK do .NET 10 e Docker.
+
+```bash
+docker compose up -d postgres                                  # banco local (aplica database/migrations num volume novo)
+dotnet run --project backend/src/Pagamentos.Api                # API em http://localhost:5186
+dotnet test backend/Pagamentos.slnx                            # unidade + integração (Testcontainers, Docker ligado)
+```
+
+Endpoints disponíveis: `POST /users` (cadastro de usuário comum ou lojista com carteira de R$ 1.000,00) — detalhes na [SPEC 02](docs/specs/02-fundacao-backend-cadastro.md).
+
 ## Front-end (DuduPay)
 
 SPA em React + Vite + TypeScript, em [`frontend/`](frontend/). Requer Node 22.12+ ou 24+.

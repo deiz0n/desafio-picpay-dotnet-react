@@ -4,4 +4,8 @@
     <ProjectReference Include="../Pagamentos.Domain/Pagamentos.Domain.csproj" />
     <ProjectReference Include="../Pagamentos.Infrastructure/Pagamentos.Infrastructure.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.89" />
+  </ItemGroup>
 </Project>

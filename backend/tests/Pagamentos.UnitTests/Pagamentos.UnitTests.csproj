@@ -18,5 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="../../src/Pagamentos.Domain/Pagamentos.Domain.csproj" />
     <ProjectReference Include="../../src/Pagamentos.Application/Pagamentos.Application.csproj" />
+    <ProjectReference Include="..\..\src\Pagamentos.Infrastructure\Pagamentos.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

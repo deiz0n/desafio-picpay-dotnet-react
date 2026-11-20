@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Npgsql;
 using Pagamentos.Domain.Persistencia;
 
@@ -7,7 +8,7 @@ namespace Pagamentos.Infrastructure.Data;
 /// Dona da conexão e da transação de uma requisição (registrada como Scoped, ADR 0005).
 /// A conexão só é aberta quando alguém precisa dela.
 /// </summary>
-public sealed class UnidadeDeTrabalho(NpgsqlDataSource dataSource)
+public sealed class UnidadeDeTrabalho(NpgsqlDataSource dataSource, ILogger<UnidadeDeTrabalho> logger)
     : IUnidadeDeTrabalho, IConexaoDeBanco, IAsyncDisposable
 {
     private NpgsqlConnection? _conexao;
@@ -33,13 +34,26 @@ public sealed class UnidadeDeTrabalho(NpgsqlDataSource dataSource)
         await EncerrarTransacaoAsync();
     }
 
-    /// <summary>Desfaz a transação em andamento. Sem transação, não faz nada (pode ser chamado mais de uma vez).</summary>
+    /// <summary>
+    /// Desfaz a transação em andamento. Sem transação, não faz nada (pode ser chamado mais de uma vez).
+    /// Nunca lança: normalmente é chamado dentro de um <c>catch</c>, e uma exceção aqui esconderia a original.
+    /// Se o rollback falhar (ex.: conexão perdida), o Postgres já descarta a transação ao fechar a conexão.
+    /// </summary>
     public async Task DesfazerAsync(CancellationToken cancellationToken = default)
     {
         if (Transacao is null)
             return;
 
-        await Transacao.RollbackAsync(cancellationToken);
+        try
+        {
+            await Transacao.RollbackAsync(cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Falha ao desfazer a transação; a conexão será descartada.");
+            await DescartarConexaoAsync();
+        }
+
         await EncerrarTransacaoAsync();
     }
 
@@ -47,15 +61,31 @@ public sealed class UnidadeDeTrabalho(NpgsqlDataSource dataSource)
     public async ValueTask DisposeAsync()
     {
         await EncerrarTransacaoAsync();
-        if (_conexao is not null)
-            await _conexao.DisposeAsync();
-        _conexao = null;
+        await DescartarConexaoAsync();
     }
 
     private async Task EncerrarTransacaoAsync()
     {
-        if (Transacao is not null)
-            await Transacao.DisposeAsync();
+        var transacao = Transacao;
         Transacao = null;
+        if (transacao is null)
+            return;
+
+        try
+        {
+            await transacao.DisposeAsync();
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "Falha ao descartar a transação.");
+        }
+    }
+
+    private async Task DescartarConexaoAsync()
+    {
+        var conexao = _conexao;
+        _conexao = null;
+        if (conexao is not null)
+            await conexao.DisposeAsync();
     }
 }

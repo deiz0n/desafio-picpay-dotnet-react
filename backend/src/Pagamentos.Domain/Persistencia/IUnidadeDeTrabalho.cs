@@ -11,5 +11,9 @@ public interface IUnidadeDeTrabalho
 
     Task ConfirmarAsync(CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// Desfaz a transação em andamento; sem transação, não faz nada. Nunca lança, para não esconder
+    /// a exceção original quando é chamado dentro de um <c>catch</c>.
+    /// </summary>
     Task DesfazerAsync(CancellationToken cancellationToken = default);
 }

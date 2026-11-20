@@ -1,4 +1,5 @@
 using Dapper;
+using Microsoft.Extensions.Logging.Abstractions;
 using Pagamentos.Domain.Usuarios;
 using Pagamentos.Domain.Usuarios.Entidades;
 using Pagamentos.Infrastructure.Data;
@@ -28,7 +29,7 @@ public class RepositoriosTests(PostgresFixture db) : IAsyncLifetime
     [Fact]
     public async Task Confirmar_AposInserirUsuarioECarteira_GravaAmbos()
     {
-        await using var unidade = new UnidadeDeTrabalho(db.DataSource);
+        await using var unidade = new UnidadeDeTrabalho(db.DataSource, NullLogger<UnidadeDeTrabalho>.Instance);
         var usuarios = new UsuarioRepositorio(unidade);
         var carteiras = new CarteiraRepositorio(unidade);
         var usuario = NovoUsuario();
@@ -56,7 +57,7 @@ public class RepositoriosTests(PostgresFixture db) : IAsyncLifetime
     [Fact]
     public async Task Desfazer_AposInserirUsuario_NaoGravaNada()
     {
-        await using var unidade = new UnidadeDeTrabalho(db.DataSource);
+        await using var unidade = new UnidadeDeTrabalho(db.DataSource, NullLogger<UnidadeDeTrabalho>.Instance);
         var usuarios = new UsuarioRepositorio(unidade);
 
         await unidade.IniciarAsync();
@@ -67,9 +68,27 @@ public class RepositoriosTests(PostgresFixture db) : IAsyncLifetime
     }
 
     [Fact]
+    public async Task Desfazer_ConexaoPerdida_NaoLancaENaoGravaNada()
+    {
+        await using var unidade = new UnidadeDeTrabalho(db.DataSource, NullLogger<UnidadeDeTrabalho>.Instance);
+        await unidade.IniciarAsync();
+        await new UsuarioRepositorio(unidade).AdicionarAsync(NovoUsuario());
+
+        // Derruba a conexão da unidade de trabalho no meio da transação.
+        var pid = (await unidade.ObterConexaoAsync()).ProcessID;
+        await using (var admin = await db.DataSource.OpenConnectionAsync())
+            await admin.ExecuteAsync("SELECT pg_terminate_backend(@pid)", new { pid });
+
+        // O rollback falha, mas não pode lançar: senão esconderia a exceção original do Handler.
+        await unidade.DesfazerAsync();
+
+        Assert.Equal(0, await ContarAsync("usuarios"));
+    }
+
+    [Fact]
     public async Task Dispose_SemConfirmar_NaoGravaNada()
     {
-        await using (var unidade = new UnidadeDeTrabalho(db.DataSource))
+        await using (var unidade = new UnidadeDeTrabalho(db.DataSource, NullLogger<UnidadeDeTrabalho>.Instance))
         {
             await unidade.IniciarAsync();
             await new UsuarioRepositorio(unidade).AdicionarAsync(NovoUsuario());
@@ -81,14 +100,14 @@ public class RepositoriosTests(PostgresFixture db) : IAsyncLifetime
     [Fact]
     public async Task ExisteAsync_EmailEDocumentoGravados_RetornaVerdadeiro()
     {
-        await using (var unidade = new UnidadeDeTrabalho(db.DataSource))
+        await using (var unidade = new UnidadeDeTrabalho(db.DataSource, NullLogger<UnidadeDeTrabalho>.Instance))
         {
             await unidade.IniciarAsync();
             await new UsuarioRepositorio(unidade).AdicionarAsync(NovoUsuario());
             await unidade.ConfirmarAsync();
         }
 
-        await using var leitura = new UnidadeDeTrabalho(db.DataSource);
+        await using var leitura = new UnidadeDeTrabalho(db.DataSource, NullLogger<UnidadeDeTrabalho>.Instance);
         var repositorio = new UsuarioRepositorio(leitura);
         Assert.True(await repositorio.EmailExisteAsync("maria@exemplo.com"));
         Assert.True(await repositorio.DocumentoExisteAsync("52998224725"));
@@ -101,14 +120,14 @@ public class RepositoriosTests(PostgresFixture db) : IAsyncLifetime
     [InlineData("outra@exemplo.com", "52998224725", "document_taken")]
     public async Task AdicionarAsync_ViolacaoDeUnique_RetornaConflito(string email, string documento, string codigo)
     {
-        await using (var unidade = new UnidadeDeTrabalho(db.DataSource))
+        await using (var unidade = new UnidadeDeTrabalho(db.DataSource, NullLogger<UnidadeDeTrabalho>.Instance))
         {
             await unidade.IniciarAsync();
             await new UsuarioRepositorio(unidade).AdicionarAsync(NovoUsuario());
             await unidade.ConfirmarAsync();
         }
 
-        await using var segunda = new UnidadeDeTrabalho(db.DataSource);
+        await using var segunda = new UnidadeDeTrabalho(db.DataSource, NullLogger<UnidadeDeTrabalho>.Instance);
         await segunda.IniciarAsync();
         var resultado = await new UsuarioRepositorio(segunda).AdicionarAsync(NovoUsuario(email, documento));
         await segunda.DesfazerAsync();

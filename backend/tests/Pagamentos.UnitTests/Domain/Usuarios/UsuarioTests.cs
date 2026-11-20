@@ -112,6 +112,29 @@ public class UsuarioTests
         Assert.Equal(["nome", "email", "documento", "senha"], campos);
     }
 
+    [Theory]
+    [InlineData("1")]               // nem CPF nem CNPJ
+    [InlineData("52998224724")]     // CPF com dígito errado
+    [InlineData("11222333000182")]  // CNPJ com dígito errado
+    public void Criar_TipoDesconhecidoEDocumentoInvalido_RetornaFalhaNoDocumentoENoTipo(string documento)
+    {
+        var resultado = Criar(documento: documento, tipo: null);
+
+        AssertFalhaNoCampo(resultado, "documento");
+        AssertFalhaNoCampo(resultado, "tipo");
+    }
+
+    [Theory]
+    [InlineData(CpfValido)]
+    [InlineData(CnpjValido)]
+    public void Criar_TipoDesconhecidoEDocumentoValido_RetornaFalhaSoNoTipo(string documento)
+    {
+        var resultado = Criar(documento: documento, tipo: null);
+
+        AssertFalhaNoCampo(resultado, "tipo");
+        Assert.Single(resultado.Erro!.Campos);
+    }
+
     [Fact]
     public void Criar_EmailComMaiusculasEEspacos_NormalizaEmail()
     {

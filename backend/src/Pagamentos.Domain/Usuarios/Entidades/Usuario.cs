@@ -105,6 +105,10 @@ public sealed partial class Usuario
             case TipoUsuario.Lojista when !ValidadorDeDocumento.CnpjValido(documento):
                 erros.Add(new("documento", "CNPJ inválido."));
                 break;
+            // Tipo desconhecido já gera erro em "tipo"; o documento ainda precisa ser um CPF ou CNPJ válido.
+            case null when !ValidadorDeDocumento.CpfValido(documento) && !ValidadorDeDocumento.CnpjValido(documento):
+                erros.Add(new("documento", "Informe um CPF ou CNPJ válido."));
+                break;
         }
     }
 
